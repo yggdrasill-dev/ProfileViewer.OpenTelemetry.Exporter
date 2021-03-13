@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31105.61
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTelemetry.Contrib.Extensions.ProfileViewer", "OpenTelemetry.Contrib.Extensions.ProfileViewer\OpenTelemetry.Contrib.Extensions.ProfileViewer.csproj", "{58DDCF2D-8885-4A4C-8A32-720F2049BB4D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoWebApi", "DemoWebApi\DemoWebApi.csproj", "{999A885B-2D20-4E17-BDF0-EFC9009ACC26}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{58DDCF2D-8885-4A4C-8A32-720F2049BB4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58DDCF2D-8885-4A4C-8A32-720F2049BB4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58DDCF2D-8885-4A4C-8A32-720F2049BB4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58DDCF2D-8885-4A4C-8A32-720F2049BB4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{999A885B-2D20-4E17-BDF0-EFC9009ACC26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{999A885B-2D20-4E17-BDF0-EFC9009ACC26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{999A885B-2D20-4E17-BDF0-EFC9009ACC26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{999A885B-2D20-4E17-BDF0-EFC9009ACC26}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4EFEC58C-30AA-43B9-AE82-CAABA9EC8B4B}
+	EndGlobalSection
+EndGlobal
