@@ -4,6 +4,14 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Nullable>enable</Nullable>
     <OutputType>Library</OutputType>
+    <Version>0.0.1-alpha</Version>
+    <Authors>Phoenix</Authors>
+    <Company>Valhalla</Company>
+    <Copyright>MIT</Copyright>
+    <PackageProjectUrl>https://github.com/yggdrasill-dev/OpenTelemetry.Contrib.Extensions.ProfileViewer</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/yggdrasill-dev/OpenTelemetry.Contrib.Extensions.ProfileViewer.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>OpenTelemetry</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
