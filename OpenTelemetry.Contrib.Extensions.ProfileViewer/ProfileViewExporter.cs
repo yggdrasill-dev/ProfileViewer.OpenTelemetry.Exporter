@@ -5,13 +5,14 @@ namespace OpenTelemetry.Contrib.Extensions.ProfileViewer
 {
 	internal class ProfileViewExporter : BaseExporter<Activity>
 	{
-		public static ConcurrentDictionary<string, ProfileSession> Store = new ConcurrentDictionary<string, ProfileSession>();
+		public static ICircularBuffer<ProfileSession> SessionBuffer = new CircularBuffer<ProfileSession>();
+		private static ConcurrentDictionary<string, ProfileSession> _Store = new ConcurrentDictionary<string, ProfileSession>();
 
 		public override ExportResult Export(in Batch<Activity> batch)
 		{
 			foreach (var activity in batch)
 			{
-				var session = Store.GetOrAdd(
+				var session = _Store.GetOrAdd(
 					activity.RootId!,
 					key => new ProfileSession
 					{
@@ -35,6 +36,10 @@ namespace OpenTelemetry.Contrib.Extensions.ProfileViewer
 					session.Duration = activity.Duration;
 					session.DisplayName = activity.DisplayName;
 					session.StartTimeUtc = activity.StartTimeUtc;
+
+					SessionBuffer.Add(session);
+
+					_Store.TryRemove(activity.RootId!, out _);
 				}
 			}
 

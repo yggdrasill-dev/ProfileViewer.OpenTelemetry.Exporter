@@ -17,6 +17,7 @@ namespace Microsoft.AspNetCore.Builder
 		{
 			endpoints.MapGet("/profiler/view", async context =>
 			{
+				var buffer = ProfileViewExporter.SessionBuffer.ToArray();
 				// render result list view
 				context.Response.ContentType = "text/html";
 
@@ -38,7 +39,7 @@ namespace Microsoft.AspNetCore.Builder
 
 				sb.Append("<table>");
 				sb.Append("<tr><th class=\"nowrap\">Time (UTC)</th><th class=\"nowrap\">Duration (ms)</th><th>Activity</th></tr>");
-				var latestResults = ProfileViewExporter.Store.Values
+				var latestResults = buffer
 					.OrderByDescending(r => r.StartTimeUtc);
 
 				var i = 0;
@@ -76,6 +77,8 @@ namespace Microsoft.AspNetCore.Builder
 
 			endpoints.MapGet("/profiler/view/{traceId}", async context =>
 			{
+				var buffer = ProfileViewExporter.SessionBuffer.ToArray();
+
 				context.Response.ContentType = "text/html";
 
 				var sb = new StringBuilder();
@@ -90,8 +93,19 @@ namespace Microsoft.AspNetCore.Builder
 
 				var traceId = (string?)context.Request.RouteValues["traceId"];
 
-				if (!string.IsNullOrEmpty(traceId)
-					&& ProfileViewExporter.Store.TryGetValue(traceId, out var result))
+				bool TryFindSession(string? id, out ProfileSession? session)
+				{
+					session = null;
+
+					if (string.IsNullOrEmpty(id))
+						return false;
+
+					session = buffer.Where(session => session.TraceId == traceId).FirstOrDefault();
+
+					return session != null;
+				}
+
+				if (TryFindSession(traceId, out var result))
 				{
 					// render result tree
 					sb.Append("<div class=\"css-treeview\">");
