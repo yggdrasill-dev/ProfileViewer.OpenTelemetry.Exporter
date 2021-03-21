@@ -1,5 +1,7 @@
-﻿using System.Collections.Concurrent;
+﻿using System;
+using System.Collections.Concurrent;
 using System.Diagnostics;
+using System.Linq;
 
 namespace OpenTelemetry.Contrib.Extensions.ProfileViewer
 {
@@ -12,6 +14,28 @@ namespace OpenTelemetry.Contrib.Extensions.ProfileViewer
 		{
 			foreach (var activity in batch)
 			{
+				var rootActivity = FindRootActivity(activity);
+
+				if (rootActivity.Duration > TimeSpan.Zero && !_Store.ContainsKey(activity.RootId!))
+				{
+					var findedSession = SessionBuffer
+						.Where(session => session.RootId == rootActivity.RootId)
+						.FirstOrDefault();
+
+					if (findedSession != null)
+						findedSession.AddSpan(new ProfileSpan()
+						{
+							ParentId = activity.ParentId,
+							StartTimeUtc = activity.StartTimeUtc,
+							Id = activity.Id!,
+							Tags = activity.TagObjects,
+							Duration = activity.Duration,
+							DisplayName = activity.DisplayName
+						});
+
+					continue;
+				}
+
 				var session = _Store.GetOrAdd(
 					activity.RootId!,
 					key => new ProfileSession
@@ -44,6 +68,14 @@ namespace OpenTelemetry.Contrib.Extensions.ProfileViewer
 			}
 
 			return ExportResult.Success;
+		}
+
+		private Activity FindRootActivity(Activity activity)
+		{
+			if (activity.Parent == null)
+				return activity;
+
+			return FindRootActivity(activity.Parent);
 		}
 	}
 }
