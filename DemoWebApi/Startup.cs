@@ -30,6 +30,7 @@ namespace DemoWebApi
 
 			services.AddOpenTelemetryTracing(
 				(builder) => builder
+					.AddSource("DemoWebApi.*")
 					.AddAspNetCoreInstrumentation()
 					.AddHttpClientInstrumentation()
 					.AddProfileViewExporter());

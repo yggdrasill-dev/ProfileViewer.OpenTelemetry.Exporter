@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +12,7 @@ namespace DemoWebApi.Controllers
 	[Route("[controller]")]
 	public class WeatherForecastController : ControllerBase
 	{
+		private static ActivitySource _Source = new ActivitySource("DemoWebApi.Controllers.WeatherForecastController");
 		private static readonly string[] Summaries = new[]
 		{
 			"Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
@@ -26,6 +28,9 @@ namespace DemoWebApi.Controllers
 		[HttpGet]
 		public IEnumerable<WeatherForecast> Get()
 		{
+			using var a = _Source.StartActivity("Test");
+			a.AddTag("test", "123");
+
 			var rng = new Random();
 			return Enumerable.Range(1, 5).Select(index => new WeatherForecast
 			{

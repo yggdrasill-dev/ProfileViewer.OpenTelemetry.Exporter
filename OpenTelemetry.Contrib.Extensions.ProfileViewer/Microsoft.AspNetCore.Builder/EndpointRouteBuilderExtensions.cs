@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Text.Json;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
@@ -168,71 +169,35 @@ namespace Microsoft.AspNetCore.Builder
 					sb.Append("</div>");
 
 					// print timing data popups
-					//foreach (var timing in result.Timings)
-					//{
-					//    if (timing.Data == null || !timing.Data.Any()) continue;
+					foreach (var span in result.Spans)
+					{
+						if (span.Tags == null || !span.Tags.Any()) continue;
 
-					//    sb.Append("<aside id=\"data_");
-					//    sb.Append(timing.Id.ToString());
-					//    sb.Append("\" style=\"display:none\" class=\"modal\">");
-					//    sb.Append("<div>");
-					//    sb.Append("<h4><code>");
-					//    sb.Append(timing.Name.Replace("\r\n", " "));
-					//    sb.Append("</code></h4>");
-					//    sb.Append("<textarea>");
-					//    foreach (var keyValue in timing.Data)
-					//    {
-					//        if (string.IsNullOrWhiteSpace(keyValue.Value)) continue;
+						sb.Append("<aside id=\"data_");
+						sb.Append(span.Id.ToString());
+						sb.Append("\" style=\"display:none\" class=\"modal\">");
+						sb.Append("<div>");
+						sb.Append("<h4><code>");
+						sb.Append(span.DisplayName.Replace("\r\n", " "));
+						sb.Append("</code></h4>");
+						sb.Append("<textarea>");
+						foreach (var keyValue in span.Tags)
+						{
+							if (keyValue.Value == null)
+								continue;
 
-					//        sb.Append(keyValue.Key);
-					//        sb.Append(":\r\n");
-					//        var value = keyValue.Value.Trim();
+							sb.Append(keyValue.Key);
+							sb.Append(":\r\n");
 
-					//        if (value.StartsWith("<"))
-					//        {
-					//            // asuume it is XML
-					//            // try to format XML with indent
-					//            var doc = new XmlDocument();
-					//            try
-					//            {
-					//                doc.LoadXml(value);
-					//                var ms = new MemoryStream();
-					//                var xwSettings = new XmlWriterSettings
-					//                {
-					//                    Encoding = new UTF8Encoding(false),
-					//                    Indent = true,
-					//                    IndentChars = "\t"
-					//                };
-					//                using (var writer = XmlWriter.Create(ms, xwSettings))
-					//                {
-					//                    doc.Save(writer);
-					//                    ms.Seek(0, SeekOrigin.Begin);
-					//                    using (var sr = new StreamReader(ms))
-					//                    {
-					//                        value = sr.ReadToEnd();
-					//                    }
-					//                }
-					//            }
-					//            catch
-					//            {
-					//                //squash exception
-					//            }
-					//        }
-					//        sb.Append(value);
-					//        sb.Append("\r\n\r\n");
-					//    }
-					//    if (timing.Tags != null && timing.Tags.Any())
-					//    {
-					//        sb.Append("tags:\r\n");
-					//        sb.Append(timing.Tags);
-					//        sb.Append("\r\n");
-					//    }
-					//    sb.Append("</textarea>");
-					//    sb.Append(
-					//        "<a href=\"#close\" title=\"Close\" onclick=\"this.parentNode.parentNode.style.display='none'\">Close</a>");
-					//    sb.Append("</div>");
-					//    sb.Append("</aside>");
-					//}
+							sb.Append(keyValue.Value.ToString());
+							sb.Append("\r\n\r\n");
+						}
+						sb.Append("</textarea>");
+						sb.Append(
+							"<a href=\"#close\" title=\"Close\" onclick=\"this.parentNode.parentNode.style.display='none'\">Close</a>");
+						sb.Append("</div>");
+						sb.Append("</aside>");
+					}
 				}
 				else
 				{
@@ -322,10 +287,22 @@ namespace Microsoft.AspNetCore.Builder
 			else
 			{
 				sb.Append("<span class=\"leaf\">");
+				PrintDataLink(sb, span);
 				sb.Append(WebUtility.HtmlEncode(span.DisplayName.Replace("\r\n", " ")));
 				sb.Append("</span>");
 			}
 			sb.Append("</li>");
+		}
+
+		private static void PrintDataLink(StringBuilder sb, ProfileSpan span)
+		{
+			if (span.Tags == null || !span.Tags.Any()) return;
+
+			sb.Append("[<a href=\"#data_");
+			sb.Append(span.Id.ToString());
+			sb.Append("\" onclick=\"document.getElementById('data_");
+			sb.Append(span.Id.ToString());
+			sb.Append("').style.display='block';\" class=\"openModal\">Tags</a>] ");
 		}
 	}
 }
