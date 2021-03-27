@@ -27,7 +27,7 @@ jobs:
         # Artifact name
         name: nuget
         # A file, directory or wildcard pattern that describes what to upload
-        path: ValhallaWebSockets/bin/${{env.BuildConfiguration}}/*.nupkg
+        path: OpenTelemetry.Contrib.Extensions.ProfileViewer/bin/${{env.BuildConfiguration}}/*.nupkg
   push-myget:
     runs-on: self-hosted
     needs: build
