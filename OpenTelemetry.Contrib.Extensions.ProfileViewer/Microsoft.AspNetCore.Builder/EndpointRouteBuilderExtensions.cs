@@ -117,30 +117,6 @@ namespace Microsoft.AspNetCore.Builder
 					sb.Append(result!.DisplayName.Replace("\r\n", " "));
 					sb.Append("</li>");
 					sb.Append("<li class=\"summary\">");
-					if (result.Tags != null)
-					{
-						foreach (var keyValue in result.Tags)
-						{
-							sb.Append("<b>");
-							sb.Append(keyValue.Key);
-							sb.Append(": </b>");
-							var encodedValue = WebUtility.HtmlEncode(keyValue.Value?.ToString());
-							if (keyValue.Key.EndsWith("Count") || keyValue.Key.EndsWith("Duration"))
-							{
-								sb.Append("<span class=\"");
-								sb.Append(keyValue.Key);
-								sb.Append("\">");
-								sb.Append(encodedValue);
-								sb.Append("</span>");
-							}
-							else
-							{
-								sb.Append(encodedValue);
-							}
-
-							sb.Append(" &nbsp; ");
-						}
-					}
 					sb.Append("<b>machine: </b>");
 					sb.Append(Environment.MachineName);
 					sb.Append(" &nbsp; ");
@@ -186,7 +162,7 @@ namespace Microsoft.AspNetCore.Builder
 							if (keyValue.Value == null)
 								continue;
 
-							sb.Append(keyValue.Key);
+							sb.Append(@$"{keyValue.Key}");
 							sb.Append(":\r\n");
 
 							sb.Append(keyValue.Value.ToString());
@@ -278,6 +254,7 @@ namespace Microsoft.AspNetCore.Builder
 				sb.Append("\" checked=\"checked\" /><label for=\"t_");
 				sb.Append(span.Id.ToString());
 				sb.Append("\">");
+				PrintDataLink(sb, span);
 				sb.Append(WebUtility.HtmlEncode(span.DisplayName.Replace("\r\n", " ")));
 				sb.Append("</label>");
 				sb.Append("<ul>");
@@ -296,7 +273,8 @@ namespace Microsoft.AspNetCore.Builder
 
 		private static void PrintDataLink(StringBuilder sb, ProfileSpan span)
 		{
-			if (span.Tags == null || !span.Tags.Any()) return;
+			if (span.Tags == null || !span.Tags.Any())
+				return;
 
 			sb.Append("[<a href=\"#data_");
 			sb.Append(span.Id.ToString());
