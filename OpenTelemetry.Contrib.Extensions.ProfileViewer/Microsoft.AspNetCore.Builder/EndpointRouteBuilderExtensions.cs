@@ -24,11 +24,11 @@ namespace Microsoft.AspNetCore.Builder
 
 				var sb = new StringBuilder();
 				sb.Append("<head>");
-				sb.Append("<title>CoreProfiler Latest Profiling Results</title>");
+				sb.Append("<title>OpenTelemetry Latest Profiling Results</title>");
 				sb.Append("<style>th { width: 200px; text-align: left; } .gray { background-color: #eee; } .nowrap { white-space: nowrap;padding-right: 20px; vertical-align:top; } </style>");
 				sb.Append("</head");
 				sb.Append("<body>");
-				sb.Append("<h1>CoreProfiler Latest Profiling Results</h1>");
+				sb.Append("<h1>OpenTelemetry Latest Profiling Results</h1>");
 
 				var tagFilter = context.Request.Query["tag"];
 				if (!string.IsNullOrWhiteSpace(tagFilter))
@@ -86,11 +86,11 @@ namespace Microsoft.AspNetCore.Builder
 				sb.Append("<head>");
 				sb.Append("<meta charset=\"utf-8\" />");
 				sb.Append("<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />");
-				sb.Append("<title>CoreProfiler Profiling Result</title>");
-				sb.Append("<link rel=\"stylesheet\" href=\"./coreprofiler-resources/css\" />");
+				sb.Append("<title>OpenTelemetry Profiling Result</title>");
+				sb.Append("<link rel=\"stylesheet\" href=\"./profiler-resources/css\" />");
 				sb.Append("</head");
 				sb.Append("<body>");
-				sb.Append("<h1>CoreProfiler Profiling Result</h1>");
+				sb.Append("<h1>OpenTelemetry Profiling Result</h1>");
 
 				var traceId = (string?)context.Request.RouteValues["traceId"];
 
@@ -184,7 +184,7 @@ namespace Microsoft.AspNetCore.Builder
 
 				await context.Response.WriteAsync(sb.ToString());
 			});
-			endpoints.MapGet("/profiler/view/coreprofiler-resources/icons", async context =>
+			endpoints.MapGet("/profiler/view/profiler-resources/icons", async context =>
 			{
 				var resourceFileProvider = context.RequestServices.GetRequiredService<IResourceFileProvider>();
 
@@ -196,7 +196,7 @@ namespace Microsoft.AspNetCore.Builder
 				await context.Response.Body.WriteAsync(br.ReadBytes((int)iconsStream.Length), 0, (int)iconsStream.Length);
 			});
 
-			endpoints.MapGet("/profiler/view/coreprofiler-resources/css", async context =>
+			endpoints.MapGet("/profiler/view/profiler-resources/css", async context =>
 			{
 				var resourceFileProvider = context.RequestServices.GetRequiredService<IResourceFileProvider>();
 
