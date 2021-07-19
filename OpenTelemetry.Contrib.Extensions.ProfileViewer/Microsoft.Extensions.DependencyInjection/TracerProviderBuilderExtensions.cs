@@ -9,7 +9,7 @@ namespace Microsoft.Extensions.DependencyInjection
 		public static TracerProviderBuilder AddProfileViewExporter(this TracerProviderBuilder builder)
 		{
 			return builder
-				.AddProcessor(new SimpleActivityExportProcessor(new ProfileViewExporter()));
+				.AddProcessor(new ProfileViewExportProcessor());
 		}
 	}
 }

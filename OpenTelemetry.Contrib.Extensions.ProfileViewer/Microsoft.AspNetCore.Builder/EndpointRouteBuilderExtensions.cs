@@ -18,7 +18,7 @@ namespace Microsoft.AspNetCore.Builder
 		{
 			endpoints.MapGet("/profiler/view", async context =>
 			{
-				var buffer = ProfileViewExporter.SessionBuffer.ToArray();
+				var buffer = ProfileViewExportProcessor.SessionBuffer.ToArray();
 				// render result list view
 				context.Response.ContentType = "text/html";
 
@@ -78,7 +78,7 @@ namespace Microsoft.AspNetCore.Builder
 
 			endpoints.MapGet("/profiler/view/{traceId}", async context =>
 			{
-				var buffer = ProfileViewExporter.SessionBuffer.ToArray();
+				var buffer = ProfileViewExportProcessor.SessionBuffer.ToArray();
 
 				context.Response.ContentType = "text/html";
 
