@@ -29,7 +29,7 @@ namespace DemoWebApi.Controllers
 		public IEnumerable<WeatherForecast> Get()
 		{
 			using var a = _Source.StartActivity("Test");
-			a.AddTag("test", "123");
+			a?.AddTag("test", "123");
 
 			var rng = new Random();
 			return Enumerable.Range(1, 5).Select(index => new WeatherForecast

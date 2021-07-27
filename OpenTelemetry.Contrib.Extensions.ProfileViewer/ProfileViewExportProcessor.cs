@@ -1,5 +1,8 @@
 ﻿using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics;
+using System.Linq;
 
 namespace OpenTelemetry.Contrib.Extensions.ProfileViewer
 {
@@ -7,6 +10,12 @@ namespace OpenTelemetry.Contrib.Extensions.ProfileViewer
 	{
 		public static ICircularBuffer<ProfileSession> SessionBuffer = new CircularBuffer<ProfileSession>();
 		private static ConcurrentDictionary<string, ProfileSession> _Store = new ConcurrentDictionary<string, ProfileSession>();
+		private ImmutableArray<IProfileFilter> m_ProfilerFilters;
+
+		public ProfileViewExportProcessor(IEnumerable<IProfileFilter> filters)
+		{
+			m_ProfilerFilters = filters.ToImmutableArray();
+		}
 
 		public override void OnEnd(Activity data)
 		{
@@ -58,7 +67,8 @@ namespace OpenTelemetry.Contrib.Extensions.ProfileViewer
 				session.DisplayName = activity.DisplayName;
 				session.StartTimeUtc = activity.StartTimeUtc;
 
-				SessionBuffer.Add(session);
+				if (!m_ProfilerFilters.Any(filter => filter.Filtering(activity)))
+					SessionBuffer.Add(session);
 
 				_ = _Store.TryRemove(activity.RootId!, out _);
 			}

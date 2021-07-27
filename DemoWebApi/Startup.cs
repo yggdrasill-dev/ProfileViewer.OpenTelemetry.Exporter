@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using OpenTelemetry.Contrib.Extensions.ProfileViewer;
 using OpenTelemetry.Trace;
 
 namespace DemoWebApi
@@ -33,7 +34,10 @@ namespace DemoWebApi
 					.AddSource("DemoWebApi.*")
 					.AddAspNetCoreInstrumentation()
 					.AddHttpClientInstrumentation()
-					.AddProfileViewExporter());
+					.AddProfileViewExporter(builder =>
+					{
+						builder.AddFilter(new FileExtensionFilter("ico"));
+					}));
 			services.AddProfileViewer();
 		}
 
