@@ -40,4 +40,6 @@ jobs:
         # Destination path
         path: nuget
     - name: push
-      run: dotnet nuget push "nuget\*.nupkg" -s "$($env:NugetSource)" -k "${{ secrets.NUGETAPIKEY }}" --skip-duplicate
+      run: |
+        dotnet nuget push "nuget\*.nupkg" -s "$($env:NugetSource)" -k "${{ secrets.NUGETAPIKEY }}" --skip-duplicate
+        dotnet nuget push "nuget\*.nupkg" -k "${{ secrets.PUBNUGETAPIKEY }}" --skip-duplicate
