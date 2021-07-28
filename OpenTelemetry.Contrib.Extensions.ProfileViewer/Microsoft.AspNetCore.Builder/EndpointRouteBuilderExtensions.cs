@@ -61,7 +61,7 @@ namespace Microsoft.AspNetCore.Builder
 					sb.Append("><td class=\"nowrap\">");
 					sb.Append(result.StartTimeUtc.ToString("yyyy-MM-ddTHH:mm:ss.FFF"));
 					sb.Append("</td><td class=\"nowrap\">");
-					sb.Append(result.Duration.TotalMilliseconds);
+					sb.Append(result.Duration.TotalMilliseconds.ToString("F2"));
 					sb.Append("</td><td><a href=\"/profiler/view/");
 					sb.Append(result.TraceId);
 					sb.Append("\" target=\"_blank\">");
@@ -133,7 +133,7 @@ namespace Microsoft.AspNetCore.Builder
 					// print ruler
 					sb.Append("<ul>");
 					sb.Append("<li class=\"ruler\"><span style=\"width:300px\">0</span><span style=\"width:80px\">");
-					sb.Append(totalLength);
+					sb.Append(totalLength.ToString("F2"));
 					sb.Append(
 						" (ms)</span><span style=\"width:20px\">&nbsp;</span><span style=\"width:60px\">Start</span><span style=\"width:60px\">Duration</span><span style=\"width:20px\">&nbsp;</span><span>Timing Hierarchy</span></li>");
 					sb.Append("</ul>");
@@ -242,9 +242,9 @@ namespace Microsoft.AspNetCore.Builder
 			}
 			sb.Append(width);
 			sb.Append("px\"></span><span class=\"start\">+");
-			sb.Append(startMilliseconds);
+			sb.Append(startMilliseconds.ToString("F2"));
 			sb.Append("</span><span class=\"duration\">");
-			sb.Append(span.Duration.TotalMilliseconds);
+			sb.Append(span.Duration.TotalMilliseconds.ToString("F2"));
 			sb.Append("</span></span>");
 			var hasChildTimings = session.Spans.Any(s => s.ParentId == span.Id);
 			if (hasChildTimings)
