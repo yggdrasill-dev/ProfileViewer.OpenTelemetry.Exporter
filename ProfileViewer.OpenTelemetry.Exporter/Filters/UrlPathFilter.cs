@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 
-namespace OpenTelemetry.Contrib.Extensions.ProfileViewer.Filters
+namespace OpenTelemetry.Exporter.ProfileViewer.Filters
 {
 	public class UrlPathFilter : IProfileFilter
 	{

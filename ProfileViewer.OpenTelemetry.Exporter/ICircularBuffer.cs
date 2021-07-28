@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace OpenTelemetry.Contrib.Extensions.ProfileViewer
+namespace OpenTelemetry.Exporter.ProfileViewer
 {
 	public interface ICircularBuffer<T> : IEnumerable<T>
 	{

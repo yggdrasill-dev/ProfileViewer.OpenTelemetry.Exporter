@@ -3,21 +3,21 @@
 using System;
 using System.Collections.Generic;
 
-namespace OpenTelemetry.Contrib.Extensions.ProfileViewer
+namespace OpenTelemetry.Exporter.ProfileViewer
 {
 	internal class ProfileSpan
 	{
-		public string? ParentId { get; internal set; }
+		public string DisplayName { get; internal set; }
+
+		public TimeSpan Duration { get; internal set; }
 
 		public string Id { get; internal set; }
+
+		public string? ParentId { get; internal set; }
 
 		public DateTime StartTimeUtc { get; internal set; }
 
 		public IEnumerable<KeyValuePair<string, object?>> Tags { get; internal set; }
-
-		public TimeSpan Duration { get; internal set; }
-
-		public string DisplayName { get; internal set; }
 	}
 }
 

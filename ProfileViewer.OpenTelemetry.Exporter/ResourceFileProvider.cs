@@ -2,7 +2,7 @@
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Primitives;
 
-namespace OpenTelemetry.Contrib.Extensions.ProfileViewer
+namespace OpenTelemetry.Exporter.ProfileViewer
 {
 	internal class ResourceFileProvider : IResourceFileProvider
 	{
@@ -10,7 +10,9 @@ namespace OpenTelemetry.Contrib.Extensions.ProfileViewer
 
 		public ResourceFileProvider()
 		{
-			m_EmbeddedFileProvider = new EmbeddedFileProvider(GetType().GetTypeInfo().Assembly);
+			m_EmbeddedFileProvider = new EmbeddedFileProvider(
+				Assembly.GetExecutingAssembly(),
+				"OpenTelemetry.Exporter.ProfileViewer");
 		}
 
 		public IDirectoryContents GetDirectoryContents(string subpath)

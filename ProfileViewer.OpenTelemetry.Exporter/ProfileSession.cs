@@ -4,24 +4,24 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 
-namespace OpenTelemetry.Contrib.Extensions.ProfileViewer
+namespace OpenTelemetry.Exporter.ProfileViewer
 {
 	internal class ProfileSession
 	{
 		private ConcurrentBag<ProfileSpan> m_Spans = new ConcurrentBag<ProfileSpan>();
+		public string DisplayName { get; internal set; } = string.Empty;
+
+		public TimeSpan Duration { get; internal set; }
+
+		public string RootId { get; internal set; }
+
 		public IEnumerable<ProfileSpan> Spans => m_Spans.ToArray();
 
 		public DateTime StartTimeUtc { get; internal set; }
 
 		public IEnumerable<KeyValuePair<string, object?>> Tags { get; internal set; } = new KeyValuePair<string, object?>[0];
 
-		public TimeSpan Duration { get; internal set; }
-
 		public string TraceId { get; internal set; } = string.Empty;
-
-		public string DisplayName { get; internal set; } = string.Empty;
-
-		public string RootId { get; internal set; }
 
 		public void AddSpan(ProfileSpan span)
 		{

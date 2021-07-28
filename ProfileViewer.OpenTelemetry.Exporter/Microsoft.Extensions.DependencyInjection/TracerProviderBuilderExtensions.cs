@@ -1,5 +1,6 @@
 ﻿using System;
-using OpenTelemetry.Contrib.Extensions.ProfileViewer;
+using OpenTelemetry.Exporter.ProfileViewer;
+using OpenTelemetry.Exporter.ProfileViewer.Filters;
 using OpenTelemetry.Trace;
 
 namespace Microsoft.Extensions.DependencyInjection

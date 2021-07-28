@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
-using System.Text.Json;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
-using OpenTelemetry.Contrib.Extensions.ProfileViewer;
+using OpenTelemetry.Exporter.ProfileViewer;
 
 namespace Microsoft.AspNetCore.Builder
 {
@@ -208,13 +206,16 @@ namespace Microsoft.AspNetCore.Builder
 			});
 		}
 
-		private static void PrintTimings(ProfileSession session, string? parentId, StringBuilder sb, double factor)
+		private static void PrintDataLink(StringBuilder sb, ProfileSpan span)
 		{
-			var firstLevelSpans = session.Spans.Where(s => s.ParentId == parentId);
-			foreach (var span in firstLevelSpans)
-			{
-				PrintTiming(session, span, sb, factor);
-			}
+			if (span.Tags == null || !span.Tags.Any())
+				return;
+
+			sb.Append("[<a href=\"#data_");
+			sb.Append(span.Id.ToString());
+			sb.Append("\" onclick=\"document.getElementById('data_");
+			sb.Append(span.Id.ToString());
+			sb.Append("').style.display='block';\" class=\"openModal\">Tags</a>] ");
 		}
 
 		private static void PrintTiming(ProfileSession session, ProfileSpan span, StringBuilder sb, double factor)
@@ -271,16 +272,13 @@ namespace Microsoft.AspNetCore.Builder
 			sb.Append("</li>");
 		}
 
-		private static void PrintDataLink(StringBuilder sb, ProfileSpan span)
+		private static void PrintTimings(ProfileSession session, string? parentId, StringBuilder sb, double factor)
 		{
-			if (span.Tags == null || !span.Tags.Any())
-				return;
-
-			sb.Append("[<a href=\"#data_");
-			sb.Append(span.Id.ToString());
-			sb.Append("\" onclick=\"document.getElementById('data_");
-			sb.Append(span.Id.ToString());
-			sb.Append("').style.display='block';\" class=\"openModal\">Tags</a>] ");
+			var firstLevelSpans = session.Spans.Where(s => s.ParentId == parentId);
+			foreach (var span in firstLevelSpans)
+			{
+				PrintTiming(session, span, sb, factor);
+			}
 		}
 	}
 }

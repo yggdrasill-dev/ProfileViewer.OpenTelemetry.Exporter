@@ -13,6 +13,7 @@
 		<RepositoryType>git</RepositoryType>
 		<PackageTags>OpenTelemetry</PackageTags>
 		<IsPackable>true</IsPackable>
+		<RootNamespace>OpenTelemetry.Exporter.ProfileViewer</RootNamespace>
 	</PropertyGroup>
 
 	<ItemGroup>

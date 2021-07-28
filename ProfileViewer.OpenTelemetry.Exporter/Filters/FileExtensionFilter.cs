@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Linq;
 
-namespace OpenTelemetry.Contrib.Extensions.ProfileViewer
+namespace OpenTelemetry.Exporter.ProfileViewer.Filters
 {
 	public class FileExtensionFilter : IProfileFilter
 	{

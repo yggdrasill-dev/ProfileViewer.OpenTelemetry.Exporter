@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using OpenTelemetry.Exporter.ProfileViewer.Filters;
 
-namespace OpenTelemetry.Contrib.Extensions.ProfileViewer
+namespace OpenTelemetry.Exporter.ProfileViewer
 {
 	public class ProfileViewProcessorBuilder
 	{

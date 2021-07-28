@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -12,12 +11,12 @@ namespace DemoWebApi.Controllers
 	[Route("[controller]")]
 	public class WeatherForecastController : ControllerBase
 	{
-		private static ActivitySource _Source = new ActivitySource("DemoWebApi.Controllers.WeatherForecastController");
 		private static readonly string[] Summaries = new[]
 		{
 			"Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
 		};
 
+		private static ActivitySource _Source = new ActivitySource("DemoWebApi.Controllers.WeatherForecastController");
 		private readonly ILogger<WeatherForecastController> _logger;
 
 		public WeatherForecastController(ILogger<WeatherForecastController> logger)

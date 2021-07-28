@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace OpenTelemetry.Contrib.Extensions.ProfileViewer
+namespace OpenTelemetry.Exporter.ProfileViewer.Filters
 {
 	public interface IProfileFilter
 	{

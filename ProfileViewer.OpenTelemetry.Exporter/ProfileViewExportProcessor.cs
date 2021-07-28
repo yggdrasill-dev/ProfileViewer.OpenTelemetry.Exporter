@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Linq;
+using OpenTelemetry.Exporter.ProfileViewer.Filters;
 
-namespace OpenTelemetry.Contrib.Extensions.ProfileViewer
+namespace OpenTelemetry.Exporter.ProfileViewer
 {
 	internal class ProfileViewExportProcessor : BaseProcessor<Activity>
 	{

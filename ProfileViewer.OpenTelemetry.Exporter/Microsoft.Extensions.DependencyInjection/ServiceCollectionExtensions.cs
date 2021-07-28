@@ -1,4 +1,4 @@
-﻿using OpenTelemetry.Contrib.Extensions.ProfileViewer;
+﻿using OpenTelemetry.Exporter.ProfileViewer;
 
 namespace Microsoft.Extensions.DependencyInjection
 {

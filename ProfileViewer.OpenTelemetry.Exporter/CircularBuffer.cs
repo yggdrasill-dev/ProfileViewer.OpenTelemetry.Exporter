@@ -2,16 +2,16 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 
-namespace OpenTelemetry.Contrib.Extensions.ProfileViewer
+namespace OpenTelemetry.Exporter.ProfileViewer
 {
 	/// <summary>
 	/// A ConcurrentQueue based simple circular buffer implementation.
 	/// </summary>
 	internal class CircularBuffer<T> : ICircularBuffer<T>
 	{
-		private readonly int m_Size;
-		private readonly Func<T, bool> m_ShouldBeExcluded;
 		private readonly ConcurrentQueue<T> m_Queue = new ConcurrentQueue<T>();
+		private readonly Func<T, bool> m_ShouldBeExcluded;
+		private readonly int m_Size;
 
 		/// <summary>
 		/// Initializes a <see cref="CircularBuffer{T}"/>.

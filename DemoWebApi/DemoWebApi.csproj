@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OpenTelemetry.Contrib.Extensions.ProfileViewer\OpenTelemetry.Contrib.Extensions.ProfileViewer.csproj" />
+    <ProjectReference Include="..\ProfileViewer.OpenTelemetry.Exporter\ProfileViewer.OpenTelemetry.Exporter.csproj" />
   </ItemGroup>
 
 
