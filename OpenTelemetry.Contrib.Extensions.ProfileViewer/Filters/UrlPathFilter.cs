@@ -1,14 +1,15 @@
 ﻿using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Linq;
+using Microsoft.AspNetCore.Http;
 
 namespace OpenTelemetry.Contrib.Extensions.ProfileViewer.Filters
 {
-	public class FilePathFilter : IProfileFilter
+	public class UrlPathFilter : IProfileFilter
 	{
-		private ImmutableArray<string> m_Paths;
+		private ImmutableArray<PathString> m_Paths;
 
-		public FilePathFilter(params string[] paths)
+		public UrlPathFilter(params PathString[] paths)
 		{
 			m_Paths = paths.ToImmutableArray();
 		}
