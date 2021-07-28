@@ -8,12 +8,15 @@
 		<Authors>Phoenix</Authors>
 		<Company>Valhalla</Company>
 		<Copyright>MIT</Copyright>
-		<PackageProjectUrl>https://github.com/yggdrasill-dev/OpenTelemetry.Contrib.Extensions.ProfileViewer</PackageProjectUrl>
-		<RepositoryUrl>https://github.com/yggdrasill-dev/OpenTelemetry.Contrib.Extensions.ProfileViewer.git</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/yggdrasill-dev/ProfileViewer.OpenTelemetry.Exporter</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/yggdrasill-dev/ProfileViewer.OpenTelemetry.Exporter.git</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 		<PackageTags>OpenTelemetry</PackageTags>
 		<IsPackable>true</IsPackable>
 		<RootNamespace>OpenTelemetry.Exporter.ProfileViewer</RootNamespace>
+		<PackageId>ProfileViewer.OpenTelemetry.Exporter</PackageId>
+		<Product>ProfileViewer.OpenTelemetry.Exporter</Product>
+		<Description>參考 CoreProfiler 做出 OpenTelemetry 的檢視器</Description>
 	</PropertyGroup>
 
 	<ItemGroup>
