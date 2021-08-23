@@ -274,11 +274,12 @@ namespace Microsoft.AspNetCore.Builder
 
 		private static void PrintTimings(ProfileSession session, string? parentId, StringBuilder sb, double factor)
 		{
-			var firstLevelSpans = session.Spans.Where(s => s.ParentId == parentId);
+			var firstLevelSpans = session.Spans
+				.Where(s => s.ParentId == parentId)
+				.OrderBy(s => s.StartTimeUtc);
+
 			foreach (var span in firstLevelSpans)
-			{
 				PrintTiming(session, span, sb, factor);
-			}
 		}
 	}
 }
