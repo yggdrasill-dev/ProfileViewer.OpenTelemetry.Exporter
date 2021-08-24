@@ -154,7 +154,7 @@ namespace Microsoft.AspNetCore.Builder
 						sb.Append("<h4><code>");
 						sb.Append(span.DisplayName.Replace("\r\n", " "));
 						sb.Append("</code></h4>");
-						sb.Append("<textarea>");
+						sb.Append("<textarea readonly>");
 						foreach (var keyValue in span.Tags)
 						{
 							if (keyValue.Value == null)
