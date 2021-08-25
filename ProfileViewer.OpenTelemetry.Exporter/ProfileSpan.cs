@@ -19,6 +19,8 @@ namespace OpenTelemetry.Exporter.ProfileViewer
 
 		public DateTime StartTimeUtc { get; internal set; }
 
+		public string ActivitySourceName { get; internal set; }
+
 		public IEnumerable<KeyValuePair<string, object?>> Tags { get; internal set; }
 	}
 }

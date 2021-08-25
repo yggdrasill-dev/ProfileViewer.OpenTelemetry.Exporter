@@ -162,6 +162,7 @@ namespace Microsoft.AspNetCore.Builder
 						sb.Append(span.DisplayName.Replace("\r\n", " "));
 						sb.Append("</code></h4>");
 						sb.Append("<textarea readonly>");
+						sb.Append($"ActivitySource: {span.ActivitySourceName}");
 						sb.Append("Tags => \r\n");
 						foreach (var keyValue in span.Tags)
 						{

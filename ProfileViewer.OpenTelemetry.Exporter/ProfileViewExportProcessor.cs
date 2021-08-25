@@ -54,7 +54,8 @@ namespace OpenTelemetry.Exporter.ProfileViewer
 					Tags = activity.TagObjects,
 					Baggage = activity.Baggage,
 					Duration = activity.Duration,
-					DisplayName = activity.DisplayName
+					DisplayName = activity.DisplayName,
+					ActivitySourceName = activity.Source.Name
 				});
 			}
 		}
