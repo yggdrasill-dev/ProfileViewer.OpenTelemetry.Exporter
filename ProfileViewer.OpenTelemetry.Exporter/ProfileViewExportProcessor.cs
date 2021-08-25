@@ -52,6 +52,7 @@ namespace OpenTelemetry.Exporter.ProfileViewer
 					StartTimeUtc = activity.StartTimeUtc,
 					Id = activity.Id!,
 					Tags = activity.TagObjects,
+					Baggage = activity.Baggage,
 					Duration = activity.Duration,
 					DisplayName = activity.DisplayName
 				});
@@ -64,6 +65,7 @@ namespace OpenTelemetry.Exporter.ProfileViewer
 			{
 				session.RootId = activity.Id!;
 				session.Tags = activity.TagObjects;
+				session.Baggage = activity.Baggage;
 				session.Duration = activity.Duration;
 				session.DisplayName = activity.DisplayName;
 				session.StartTimeUtc = activity.StartTimeUtc;

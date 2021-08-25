@@ -9,6 +9,9 @@ namespace OpenTelemetry.Exporter.ProfileViewer
 	internal class ProfileSession
 	{
 		private ConcurrentBag<ProfileSpan> m_Spans = new ConcurrentBag<ProfileSpan>();
+
+		public IEnumerable<KeyValuePair<string, string?>> Baggage { get; internal set; } = Array.Empty<KeyValuePair<string, string?>>();
+
 		public string DisplayName { get; internal set; } = string.Empty;
 
 		public TimeSpan Duration { get; internal set; }
@@ -19,7 +22,7 @@ namespace OpenTelemetry.Exporter.ProfileViewer
 
 		public DateTime StartTimeUtc { get; internal set; }
 
-		public IEnumerable<KeyValuePair<string, object?>> Tags { get; internal set; } = new KeyValuePair<string, object?>[0];
+		public IEnumerable<KeyValuePair<string, object?>> Tags { get; internal set; } = Array.Empty<KeyValuePair<string, object?>>();
 
 		public string TraceId { get; internal set; } = string.Empty;
 

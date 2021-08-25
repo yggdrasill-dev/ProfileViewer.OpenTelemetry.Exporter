@@ -7,6 +7,8 @@ namespace OpenTelemetry.Exporter.ProfileViewer
 {
 	internal class ProfileSpan
 	{
+		public IEnumerable<KeyValuePair<string, string?>> Baggage { get; internal set; }
+
 		public string DisplayName { get; internal set; }
 
 		public TimeSpan Duration { get; internal set; }

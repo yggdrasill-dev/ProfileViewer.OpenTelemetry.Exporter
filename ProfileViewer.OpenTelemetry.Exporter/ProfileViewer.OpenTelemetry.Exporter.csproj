@@ -4,7 +4,7 @@
 		<TargetFramework>netcoreapp3.1</TargetFramework>
 		<Nullable>enable</Nullable>
 		<OutputType>Library</OutputType>
-		<Version>0.0.9-beta</Version>
+		<Version>0.0.10-beta</Version>
 		<Authors>Phoenix</Authors>
 		<Company>Valhalla</Company>
 		<Copyright>MIT</Copyright>

@@ -23,7 +23,13 @@ namespace Microsoft.AspNetCore.Builder
 				var sb = new StringBuilder();
 				sb.Append("<head>");
 				sb.Append("<title>OpenTelemetry Latest Profiling Results</title>");
-				sb.Append("<style>th { width: 200px; text-align: left; } .gray { background-color: #eee; } .nowrap { white-space: nowrap;padding-right: 20px; vertical-align:top; } </style>");
+				sb.Append(
+					"<style>" +
+					"th { width: 200px; text-align: left; } " +
+					".gray { background-color: #eee; } " +
+					".nowrap { white-space: nowrap;padding-right: 20px; vertical-align:top; } " +
+					".break-all { word-break: break-all; } " +
+					"</style>");
 				sb.Append("</head");
 				sb.Append("<body>");
 				sb.Append("<h1>OpenTelemetry Latest Profiling Results</h1>");
@@ -37,30 +43,30 @@ namespace Microsoft.AspNetCore.Builder
 				}
 
 				sb.Append("<table>");
-				sb.Append("<tr><th class=\"nowrap\">Time (UTC)</th><th class=\"nowrap\">Duration (ms)</th><th>Activity</th></tr>");
+				sb.Append("<tr><th class=\"nowrap\">Time (UTC)</th><th class=\"nowrap\">Duration (ms)</th><th style=\"width: 100%\">Activity</th></tr>");
 				var latestResults = buffer
 					.OrderByDescending(r => r.StartTimeUtc);
 
 				var i = 0;
 				foreach (var result in latestResults)
 				{
-					if (!string.IsNullOrWhiteSpace(tagFilter) &&
-						(result.Tags == null || !result.Tags.Select(p => p.Key).Contains<string>(tagFilter, StringComparer.OrdinalIgnoreCase)))
+					if (!string.IsNullOrWhiteSpace(tagFilter)
+						&& (result.Tags == null
+							|| !result.Tags
+								.Select(p => p.Key)
+								.Contains<string>(tagFilter, StringComparer.OrdinalIgnoreCase)))
 					{
 						continue;
 					}
 
 					sb.Append("<tr");
 					if ((i++) % 2 == 1)
-					{
 						sb.Append(" class=\"gray\"");
-					}
-
 					sb.Append("><td class=\"nowrap\">");
 					sb.Append(result.StartTimeUtc.ToString("yyyy-MM-ddTHH:mm:ss.FFF"));
 					sb.Append("</td><td class=\"nowrap\">");
 					sb.Append(result.Duration.TotalMilliseconds.ToString("F2"));
-					sb.Append("</td><td><a href=\"/profiler/view/");
+					sb.Append("</td><td class=\"break-all\"><a href=\"/profiler/view/");
 					sb.Append(result.TraceId);
 					sb.Append("\" target=\"_blank\">");
 					sb.Append(result.DisplayName.Replace("\r\n", " "));
@@ -133,7 +139,8 @@ namespace Microsoft.AspNetCore.Builder
 					sb.Append("<li class=\"ruler\"><span style=\"width:300px\">0</span><span style=\"width:80px\">");
 					sb.Append(totalLength.ToString("F2"));
 					sb.Append(
-						" (ms)</span><span style=\"width:20px\">&nbsp;</span><span style=\"width:60px\">Start</span><span style=\"width:60px\">Duration</span><span style=\"width:20px\">&nbsp;</span><span>Timing Hierarchy</span></li>");
+						" (ms)</span><span style=\"width:20px\">&nbsp;</span><span style=\"width:60px\">Start</span>" +
+						"<span style=\"width:60px\">Duration</span><span style=\"width:20px\">&nbsp;</span><span>Timing Hierarchy</span></li>");
 					sb.Append("</ul>");
 
 					// print timings
@@ -155,15 +162,23 @@ namespace Microsoft.AspNetCore.Builder
 						sb.Append(span.DisplayName.Replace("\r\n", " "));
 						sb.Append("</code></h4>");
 						sb.Append("<textarea readonly>");
+						sb.Append("Tags => \r\n");
 						foreach (var keyValue in span.Tags)
 						{
 							if (keyValue.Value == null)
 								continue;
 
-							sb.Append(@$"{keyValue.Key}");
-							sb.Append(":\r\n");
-
+							sb.Append($"{keyValue.Key}:\r\n");
 							sb.Append(keyValue.Value.ToString());
+							sb.Append("\r\n\r\n");
+						}
+
+						sb.Append("Baggage => \r\n");
+						foreach (var keyValue in span.Baggage)
+						{
+							sb.Append($"{keyValue.Key}:\r\n");
+							if (keyValue.Value != null)
+								sb.Append(keyValue.Value.ToString());
 							sb.Append("\r\n\r\n");
 						}
 						sb.Append("</textarea>");
