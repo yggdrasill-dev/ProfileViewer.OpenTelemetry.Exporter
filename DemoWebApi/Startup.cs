@@ -22,18 +22,18 @@ namespace DemoWebApi
 		{
 			if (env.IsDevelopment())
 			{
-				app.UseDeveloperExceptionPage();
+				_ = app.UseDeveloperExceptionPage();
 			}
 
-			app.UseHttpsRedirection();
+			_ = app.UseHttpsRedirection();
 
-			app.UseRouting();
+			_ = app.UseRouting();
 
-			app.UseAuthorization();
+			_ = app.UseAuthorization();
 
-			app.UseEndpoints(endpoints =>
+			_ = app.UseEndpoints(endpoints =>
 			{
-				endpoints.MapControllers();
+				_ = endpoints.MapControllers();
 				endpoints.MapProfileViewer();
 			});
 		}
@@ -41,18 +41,15 @@ namespace DemoWebApi
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddControllers();
+			_ = services.AddControllers();
 
-			services.AddOpenTelemetryTracing(
+			_ = services.AddOpenTelemetryTracing(
 				(builder) => builder
 					.AddSource("DemoWebApi.*")
 					.AddAspNetCoreInstrumentation()
 					.AddHttpClientInstrumentation()
-					.AddProfileViewExporter(builder =>
-					{
-						builder.AddFilter(new FileExtensionFilter("ico"));
-					}));
-			services.AddProfileViewer();
+					.AddProfileViewExporter(builder => builder.AddFilter(new FileExtensionFilter("ico"))));
+			_ = services.AddProfileViewer();
 		}
 	}
 }

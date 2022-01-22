@@ -13,7 +13,7 @@ namespace Microsoft.Extensions.DependencyInjection
 		{
 			var processorBuiler = new ProfileViewProcessorBuilder();
 
-			processorBuiler.AddFilter(new ProfilePathFilter());
+			_ = processorBuiler.AddFilter(new ProfilePathFilter());
 
 			configure?.Invoke(processorBuiler);
 

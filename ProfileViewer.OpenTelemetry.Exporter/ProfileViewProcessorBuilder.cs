@@ -5,7 +5,7 @@ namespace OpenTelemetry.Exporter.ProfileViewer
 {
 	public class ProfileViewProcessorBuilder
 	{
-		private List<IProfileFilter> m_ProfileFilters = new List<IProfileFilter>();
+		private readonly List<IProfileFilter> m_ProfileFilters = new List<IProfileFilter>();
 
 		internal IEnumerable<IProfileFilter> ProfileFilters => m_ProfileFilters.ToArray();
 

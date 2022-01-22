@@ -38,7 +38,7 @@ namespace OpenTelemetry.Exporter.ProfileViewer
 				m_Queue.Enqueue(item);
 				if (m_Queue.Count > m_Size)
 				{
-					m_Queue.TryDequeue(out _);
+					_ = m_Queue.TryDequeue(out _);
 				}
 			}
 		}

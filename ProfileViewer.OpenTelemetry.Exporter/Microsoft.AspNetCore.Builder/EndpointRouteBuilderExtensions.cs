@@ -14,7 +14,7 @@ namespace Microsoft.AspNetCore.Builder
 	{
 		public static void MapProfileViewer(this IEndpointRouteBuilder endpoints)
 		{
-			endpoints.MapGet("/profiler/view", async context =>
+			_ = endpoints.MapGet("/profiler/view", async context =>
 			{
 				var buffer = ProfileViewExportProcessor.SessionBuffer.ToArray();
 				// render result list view
@@ -37,9 +37,9 @@ namespace Microsoft.AspNetCore.Builder
 				var tagFilter = context.Request.Query["tag"];
 				if (!string.IsNullOrWhiteSpace(tagFilter))
 				{
-					sb.Append("<div><strong>Filtered by tag:</strong> ");
-					sb.Append(tagFilter);
-					sb.Append("<br/><br /></div>");
+					_ = sb.Append("<div><strong>Filtered by tag:</strong> ")
+						.Append(tagFilter)
+						.Append("<br/><br /></div>");
 				}
 
 				sb.Append("<table>");
@@ -59,7 +59,7 @@ namespace Microsoft.AspNetCore.Builder
 						continue;
 					}
 
-					sb.Append("<tr");
+					_ = sb.Append("<tr");
 					if ((i++) % 2 == 1)
 						sb.Append(" class=\"gray\"");
 					sb.Append("><td class=\"nowrap\">");
@@ -73,28 +73,27 @@ namespace Microsoft.AspNetCore.Builder
 					sb.Append("</a></td></tr>");
 				}
 
-				sb.Append("</table>");
-
-				sb.Append("</body>");
+				_ = sb.Append("</table>")
+					.Append("</body>");
 
 				await context.Response.WriteAsync(sb.ToString());
 			});
 
-			endpoints.MapGet("/profiler/view/{traceId}", async context =>
+			_ = endpoints.MapGet("/profiler/view/{traceId}", async context =>
 			{
 				var buffer = ProfileViewExportProcessor.SessionBuffer.ToArray();
 
 				context.Response.ContentType = "text/html";
 
 				var sb = new StringBuilder();
-				sb.Append("<head>");
-				sb.Append("<meta charset=\"utf-8\" />");
-				sb.Append("<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />");
-				sb.Append("<title>OpenTelemetry Profiling Result</title>");
-				sb.Append("<link rel=\"stylesheet\" href=\"./profiler-resources/css\" />");
-				sb.Append("</head");
-				sb.Append("<body>");
-				sb.Append("<h1>OpenTelemetry Profiling Result</h1>");
+				_ = sb.Append("<head>")
+					.Append("<meta charset=\"utf-8\" />")
+					.Append("<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />")
+					.Append("<title>OpenTelemetry Profiling Result</title>")
+					.Append("<link rel=\"stylesheet\" href=\"./profiler-resources/css\" />")
+					.Append("</head")
+					.Append("<body>")
+					.Append("<h1>OpenTelemetry Profiling Result</h1>");
 
 				var traceId = (string?)context.Request.RouteValues["traceId"];
 
@@ -113,19 +112,19 @@ namespace Microsoft.AspNetCore.Builder
 				if (TryFindSession(traceId, out var result))
 				{
 					// render result tree
-					sb.Append("<div class=\"css-treeview\">");
+					_ = sb.Append("<div class=\"css-treeview\">");
 
 					// print summary
-					sb.Append("<ul>");
-					sb.Append("<li class=\"summary\">");
-					sb.Append(result!.DisplayName.Replace("\r\n", " "));
-					sb.Append("</li>");
-					sb.Append("<li class=\"summary\">");
-					sb.Append("<b>machine: </b>");
-					sb.Append(Environment.MachineName);
-					sb.Append(" &nbsp; ");
-					sb.Append("</li>");
-					sb.Append("</ul>");
+					_ = sb.Append("<ul>")
+						.Append("<li class=\"summary\">")
+						.Append(result!.DisplayName.Replace("\r\n", " "))
+						.Append("</li>")
+						.Append("<li class=\"summary\">")
+						.Append("<b>machine: </b>")
+						.Append(Environment.MachineName)
+						.Append(" &nbsp; ")
+						.Append("</li>")
+						.Append("</ul>");
 
 					var totalLength = result.Duration.TotalMilliseconds;
 					if (totalLength == 0)
@@ -144,10 +143,10 @@ namespace Microsoft.AspNetCore.Builder
 					sb.Append("</ul>");
 
 					// print timings
-					sb.Append("<ul class=\"timing\">");
+					_ = sb.Append("<ul class=\"timing\">");
 					PrintTimings(result, null, sb, factor);
-					sb.Append("</ul>");
-					sb.Append("</div>");
+					_ = sb.Append("</ul>")
+						.Append("</div>");
 
 					// print timing data popups
 					foreach (var span in result.Spans)
@@ -182,23 +181,23 @@ namespace Microsoft.AspNetCore.Builder
 								sb.Append(keyValue.Value.ToString());
 							sb.Append("\r\n\r\n");
 						}
-						sb.Append("</textarea>");
-						sb.Append(
-							"<a href=\"#close\" title=\"Close\" onclick=\"this.parentNode.parentNode.style.display='none'\">Close</a>");
-						sb.Append("</div>");
-						sb.Append("</aside>");
+						_ = sb.Append("</textarea>")
+							.Append(
+								"<a href=\"#close\" title=\"Close\" onclick=\"this.parentNode.parentNode.style.display='none'\">Close</a>")
+							.Append("</div>")
+							.Append("</aside>");
 					}
 				}
 				else
 				{
-					sb.Append("Specified result does not exist!");
+					_ = sb.Append("Specified result does not exist!");
 				}
 
-				sb.Append("</body>");
+				_ = sb.Append("</body>");
 
 				await context.Response.WriteAsync(sb.ToString());
 			});
-			endpoints.MapGet("/profiler/view/profiler-resources/icons", async context =>
+			_ = endpoints.MapGet("/profiler/view/profiler-resources/icons", async context =>
 			{
 				var resourceFileProvider = context.RequestServices.GetRequiredService<IResourceFileProvider>();
 
@@ -210,7 +209,7 @@ namespace Microsoft.AspNetCore.Builder
 				await context.Response.Body.WriteAsync(br.ReadBytes((int)iconsStream.Length), 0, (int)iconsStream.Length);
 			});
 
-			endpoints.MapGet("/profiler/view/profiler-resources/css", async context =>
+			_ = endpoints.MapGet("/profiler/view/profiler-resources/css", async context =>
 			{
 				var resourceFileProvider = context.RequestServices.GetRequiredService<IResourceFileProvider>();
 
@@ -227,27 +226,27 @@ namespace Microsoft.AspNetCore.Builder
 			if (span.Tags == null || !span.Tags.Any())
 				return;
 
-			sb.Append("[<a href=\"#data_");
-			sb.Append(span.Id.ToString());
-			sb.Append("\" onclick=\"document.getElementById('data_");
-			sb.Append(span.Id.ToString());
-			sb.Append("').style.display='block';\" class=\"openModal\">Tags</a>] ");
+			_ = sb.Append("[<a href=\"#data_")
+				.Append(span.Id.ToString())
+				.Append("\" onclick=\"document.getElementById('data_")
+				.Append(span.Id.ToString())
+				.Append("').style.display='block';\" class=\"openModal\">Tags</a>] ");
 		}
 
 		private static void PrintTiming(ProfileSession session, ProfileSpan span, StringBuilder sb, double factor)
 		{
-			sb.Append("<li><span class=\"timing\" style=\"padding-left: ");
+			_ = sb.Append("<li><span class=\"timing\" style=\"padding-left: ");
 			var startMilliseconds = (span.StartTimeUtc - session.StartTimeUtc).TotalMilliseconds;
 			var start = Math.Floor(startMilliseconds * factor);
 			if (start > 300)
 			{
 				start = 300;
 			}
-			sb.Append(start);
-			sb.Append("px\"><span class=\"bar step");
-			sb.Append("\" title=\"");
-			sb.Append(WebUtility.HtmlEncode(span.DisplayName.Replace("\r\n", " ")));
-			sb.Append("\" style=\"width: ");
+			_ = sb.Append(start)
+				.Append("px\"><span class=\"bar step")
+				.Append("\" title=\"")
+				.Append(WebUtility.HtmlEncode(span.DisplayName.Replace("\r\n", " ")))
+				.Append("\" style=\"width: ");
 			var width = (int)Math.Round(span.Duration.TotalMilliseconds * factor);
 			if (width > 300)
 			{
@@ -257,35 +256,35 @@ namespace Microsoft.AspNetCore.Builder
 			{
 				width = 1;
 			}
-			sb.Append(width);
-			sb.Append("px\"></span><span class=\"start\">+");
-			sb.Append(startMilliseconds.ToString("F2"));
-			sb.Append("</span><span class=\"duration\">");
-			sb.Append(span.Duration.TotalMilliseconds.ToString("F2"));
-			sb.Append("</span></span>");
+			_ = sb.Append(width)
+				.Append("px\"></span><span class=\"start\">+")
+				.Append(startMilliseconds.ToString("F2"))
+				.Append("</span><span class=\"duration\">")
+				.Append(span.Duration.TotalMilliseconds.ToString("F2"))
+				.Append("</span></span>");
 			var hasChildTimings = session.Spans.Any(s => s.ParentId == span.Id);
 			if (hasChildTimings)
 			{
-				sb.Append("<input type=\"checkbox\" id=\"t_");
-				sb.Append(span.Id.ToString());
-				sb.Append("\" checked=\"checked\" /><label for=\"t_");
-				sb.Append(span.Id.ToString());
-				sb.Append("\">");
+				_ = sb.Append("<input type=\"checkbox\" id=\"t_")
+					.Append(span.Id.ToString())
+					.Append("\" checked=\"checked\" /><label for=\"t_")
+					.Append(span.Id.ToString())
+					.Append("\">");
 				PrintDataLink(sb, span);
-				sb.Append(WebUtility.HtmlEncode(span.DisplayName.Replace("\r\n", " ")));
-				sb.Append("</label>");
-				sb.Append("<ul>");
+				_ = sb.Append(WebUtility.HtmlEncode(span.DisplayName.Replace("\r\n", " ")))
+					.Append("</label>")
+					.Append("<ul>");
 				PrintTimings(session, span.Id, sb, factor);
-				sb.Append("</ul>");
+				_ = sb.Append("</ul>");
 			}
 			else
 			{
-				sb.Append("<span class=\"leaf\">");
+				_ = sb.Append("<span class=\"leaf\">");
 				PrintDataLink(sb, span);
-				sb.Append(WebUtility.HtmlEncode(span.DisplayName.Replace("\r\n", " ")));
-				sb.Append("</span>");
+				_ = sb.Append(WebUtility.HtmlEncode(span.DisplayName.Replace("\r\n", " ")))
+					.Append("</span>");
 			}
-			sb.Append("</li>");
+			_ = sb.Append("</li>");
 		}
 
 		private static void PrintTimings(ProfileSession session, string? parentId, StringBuilder sb, double factor)

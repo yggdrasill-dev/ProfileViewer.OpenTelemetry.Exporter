@@ -10,7 +10,7 @@ namespace OpenTelemetry.Exporter.ProfileViewer
 	internal class ProfileViewExportProcessor : BaseProcessor<Activity>
 	{
 		public static ICircularBuffer<ProfileSession> SessionBuffer = new CircularBuffer<ProfileSession>();
-		private static ConcurrentDictionary<string, ProfileSession> _Store = new ConcurrentDictionary<string, ProfileSession>();
+		private static readonly ConcurrentDictionary<string, ProfileSession> _Store = new ConcurrentDictionary<string, ProfileSession>();
 		private ImmutableArray<IProfileFilter> m_ProfilerFilters;
 
 		public ProfileViewExportProcessor(IEnumerable<IProfileFilter> filters)
