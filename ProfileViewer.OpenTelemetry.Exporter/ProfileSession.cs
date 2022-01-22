@@ -8,7 +8,7 @@ namespace OpenTelemetry.Exporter.ProfileViewer
 {
 	internal class ProfileSession
 	{
-		private ConcurrentBag<ProfileSpan> m_Spans = new ConcurrentBag<ProfileSpan>();
+		private readonly ConcurrentBag<ProfileSpan> m_Spans = new ConcurrentBag<ProfileSpan>();
 
 		public IEnumerable<KeyValuePair<string, string?>> Baggage { get; internal set; } = Array.Empty<KeyValuePair<string, string?>>();
 

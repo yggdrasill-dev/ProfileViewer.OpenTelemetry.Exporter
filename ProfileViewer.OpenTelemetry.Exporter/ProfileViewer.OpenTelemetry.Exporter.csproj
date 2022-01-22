@@ -4,14 +4,14 @@
 		<TargetFramework>netcoreapp3.1</TargetFramework>
 		<Nullable>enable</Nullable>
 		<OutputType>Library</OutputType>
-		<Version>0.0.11-beta</Version>
+		<Version>0.1.0</Version>
 		<Authors>Phoenix</Authors>
 		<Company>Valhalla</Company>
 		<Copyright>MIT</Copyright>
 		<PackageProjectUrl>https://github.com/yggdrasill-dev/ProfileViewer.OpenTelemetry.Exporter</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/yggdrasill-dev/ProfileViewer.OpenTelemetry.Exporter.git</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
-		<PackageTags>OpenTelemetry</PackageTags>
+		<PackageTags>OpenTelemetry Tracing Phoenix</PackageTags>
 		<IsPackable>true</IsPackable>
 		<RootNamespace>OpenTelemetry.Exporter.ProfileViewer</RootNamespace>
 		<PackageId>ProfileViewer.OpenTelemetry.Exporter</PackageId>

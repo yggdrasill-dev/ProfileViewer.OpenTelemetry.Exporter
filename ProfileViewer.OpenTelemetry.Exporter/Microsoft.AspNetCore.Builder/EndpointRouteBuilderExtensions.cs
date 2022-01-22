@@ -20,30 +20,28 @@ namespace Microsoft.AspNetCore.Builder
 				// render result list view
 				context.Response.ContentType = "text/html";
 
-				var sb = new StringBuilder();
-				sb.Append("<head>");
-				sb.Append("<title>OpenTelemetry Latest Profiling Results</title>");
-				sb.Append(
-					"<style>" +
-					"th { width: 200px; text-align: left; } " +
-					".gray { background-color: #eee; } " +
-					".nowrap { white-space: nowrap;padding-right: 20px; vertical-align:top; } " +
-					".break-all { word-break: break-all; } " +
-					"</style>");
-				sb.Append("</head");
-				sb.Append("<body>");
-				sb.Append("<h1>OpenTelemetry Latest Profiling Results</h1>");
+				var sb = new StringBuilder()
+					.Append("<head>")
+					.Append("<title>OpenTelemetry Latest Profiling Results</title>")
+					.Append(
+						"<style>" +
+						"th { width: 200px; text-align: left; } " +
+						".gray { background-color: #eee; } " +
+						".nowrap { white-space: nowrap;padding-right: 20px; vertical-align:top; } " +
+						".break-all { word-break: break-all; } " +
+						"</style>")
+					.Append("</head")
+					.Append("<body>")
+					.Append("<h1>OpenTelemetry Latest Profiling Results</h1>");
 
 				var tagFilter = context.Request.Query["tag"];
 				if (!string.IsNullOrWhiteSpace(tagFilter))
-				{
 					_ = sb.Append("<div><strong>Filtered by tag:</strong> ")
 						.Append(tagFilter)
 						.Append("<br/><br /></div>");
-				}
 
-				sb.Append("<table>");
-				sb.Append("<tr><th class=\"nowrap\">Time (UTC)</th><th class=\"nowrap\">Duration (ms)</th><th style=\"width: 100%\">Activity</th></tr>");
+				_ = sb.Append("<table>")
+					.Append("<tr><th class=\"nowrap\">Time (UTC)</th><th class=\"nowrap\">Duration (ms)</th><th style=\"width: 100%\">Activity</th></tr>");
 				var latestResults = buffer
 					.OrderByDescending(r => r.StartTimeUtc);
 
@@ -61,16 +59,16 @@ namespace Microsoft.AspNetCore.Builder
 
 					_ = sb.Append("<tr");
 					if ((i++) % 2 == 1)
-						sb.Append(" class=\"gray\"");
-					sb.Append("><td class=\"nowrap\">");
-					sb.Append(result.StartTimeUtc.ToString("yyyy-MM-ddTHH:mm:ss.FFF"));
-					sb.Append("</td><td class=\"nowrap\">");
-					sb.Append(result.Duration.TotalMilliseconds.ToString("F2"));
-					sb.Append("</td><td class=\"break-all\"><a href=\"/profiler/view/");
-					sb.Append(result.TraceId);
-					sb.Append("\" target=\"_blank\">");
-					sb.Append(result.DisplayName.Replace("\r\n", " "));
-					sb.Append("</a></td></tr>");
+						_ = sb.Append(" class=\"gray\"");
+					_ = sb.Append("><td class=\"nowrap\">")
+						.Append(result.StartTimeUtc.ToString("yyyy-MM-ddTHH:mm:ss.FFF"))
+						.Append("</td><td class=\"nowrap\">")
+						.Append(result.Duration.TotalMilliseconds.ToString("F2"))
+						.Append("</td><td class=\"break-all\"><a href=\"/profiler/view/")
+						.Append(result.TraceId)
+						.Append("\" target=\"_blank\">")
+						.Append(result.DisplayName.Replace("\r\n", " "))
+						.Append("</a></td></tr>");
 				}
 
 				_ = sb.Append("</table>")
@@ -134,13 +132,13 @@ namespace Microsoft.AspNetCore.Builder
 					var factor = 300.0 / totalLength;
 
 					// print ruler
-					sb.Append("<ul>");
-					sb.Append("<li class=\"ruler\"><span style=\"width:300px\">0</span><span style=\"width:80px\">");
-					sb.Append(totalLength.ToString("F2"));
-					sb.Append(
-						" (ms)</span><span style=\"width:20px\">&nbsp;</span><span style=\"width:60px\">Start</span>" +
-						"<span style=\"width:60px\">Duration</span><span style=\"width:20px\">&nbsp;</span><span>Timing Hierarchy</span></li>");
-					sb.Append("</ul>");
+					_ = sb.Append("<ul>")
+						.Append("<li class=\"ruler\"><span style=\"width:300px\">0</span><span style=\"width:80px\">")
+						.Append(totalLength.ToString("F2"))
+						.Append(
+							" (ms)</span><span style=\"width:20px\">&nbsp;</span><span style=\"width:100px\">Start</span>" +
+							"<span style=\"width:100px\">Duration</span><span style=\"width:20px\">&nbsp;</span><span>Timing Hierarchy</span></li>")
+						.Append("</ul>");
 
 					// print timings
 					_ = sb.Append("<ul class=\"timing\">");
@@ -151,35 +149,36 @@ namespace Microsoft.AspNetCore.Builder
 					// print timing data popups
 					foreach (var span in result.Spans)
 					{
-						if (span.Tags == null || !span.Tags.Any()) continue;
+						if (span.Tags == null || !span.Tags.Any())
+							continue;
 
-						sb.Append("<aside id=\"data_");
-						sb.Append(span.Id.ToString());
-						sb.Append("\" style=\"display:none\" class=\"modal\">");
-						sb.Append("<div>");
-						sb.Append("<h4><code>");
-						sb.Append(span.DisplayName.Replace("\r\n", " "));
-						sb.Append("</code></h4>");
-						sb.Append("<textarea readonly>");
-						sb.Append($"ActivitySource: {span.ActivitySourceName}");
-						sb.Append("Tags => \r\n");
+						_ = sb.Append("<aside id=\"data_")
+							.Append(span.Id.ToString())
+							.Append("\" style=\"display:none\" class=\"modal\">")
+							.Append("<div>")
+							.Append("<h4><code>")
+							.Append(span.DisplayName.Replace("\r\n", " "))
+							.Append("</code></h4>")
+							.Append("<textarea readonly>")
+							.Append($"ActivitySource: {span.ActivitySourceName}")
+							.Append("Tags => \r\n");
 						foreach (var keyValue in span.Tags)
 						{
 							if (keyValue.Value == null)
 								continue;
 
-							sb.Append($"{keyValue.Key}:\r\n");
-							sb.Append(keyValue.Value.ToString());
-							sb.Append("\r\n\r\n");
+							_ = sb.Append($"{keyValue.Key}:\r\n")
+								.Append(keyValue.Value.ToString())
+								.Append("\r\n\r\n");
 						}
 
-						sb.Append("Baggage => \r\n");
+						_ = sb.Append("Baggage => \r\n");
 						foreach (var keyValue in span.Baggage)
 						{
-							sb.Append($"{keyValue.Key}:\r\n");
+							_ = sb.Append($"{keyValue.Key}:\r\n");
 							if (keyValue.Value != null)
-								sb.Append(keyValue.Value.ToString());
-							sb.Append("\r\n\r\n");
+								_ = sb.Append(keyValue.Value.ToString());
+							_ = sb.Append("\r\n\r\n");
 						}
 						_ = sb.Append("</textarea>")
 							.Append(

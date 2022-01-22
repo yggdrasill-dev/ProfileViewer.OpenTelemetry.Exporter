@@ -136,11 +136,11 @@
 	.css-treeview span.duration {
 		display: inline-block !important;
 		position: absolute;
-		left: 460px
+		left: 500px
 	}
 
 	.css-treeview span.leaf {
-		margin-left: 16px;
+		margin-left: 80px;
 	}
 
 	.css-treeview span.wcfCount, .css-treeview span.rpc_wcfCount, .css-treeview span.wcfDuration, .css-treeview span.rpc_wcfDuration {
