@@ -1,8 +1,7 @@
 ﻿using Microsoft.Extensions.FileProviders;
 
-namespace OpenTelemetry.Exporter.ProfileViewer
+namespace OpenTelemetry.Exporter.ProfileViewer;
+
+internal interface IResourceFileProvider : IFileProvider
 {
-	internal interface IResourceFileProvider : IFileProvider
-	{
-	}
 }

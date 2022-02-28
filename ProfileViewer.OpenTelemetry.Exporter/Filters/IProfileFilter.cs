@@ -1,9 +1,8 @@
 ﻿using System.Diagnostics;
 
-namespace OpenTelemetry.Exporter.ProfileViewer.Filters
+namespace OpenTelemetry.Exporter.ProfileViewer.Filters;
+
+public interface IProfileFilter
 {
-	public interface IProfileFilter
-	{
-		bool Filtering(Activity activity);
-	}
+	bool Filtering(Activity activity);
 }

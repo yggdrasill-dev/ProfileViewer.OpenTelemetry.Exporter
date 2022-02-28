@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
+﻿namespace OpenTelemetry.Exporter.ProfileViewer;
 
-namespace OpenTelemetry.Exporter.ProfileViewer
+public interface ICircularBuffer<T> : IEnumerable<T>
 {
-	public interface ICircularBuffer<T> : IEnumerable<T>
-	{
-		void Add(T item);
-	}
+	void Add(T item);
 }

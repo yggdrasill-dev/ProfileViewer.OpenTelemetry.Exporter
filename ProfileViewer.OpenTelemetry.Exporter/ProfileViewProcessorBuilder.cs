@@ -1,19 +1,17 @@
-﻿using System.Collections.Generic;
-using OpenTelemetry.Exporter.ProfileViewer.Filters;
+﻿using OpenTelemetry.Exporter.ProfileViewer.Filters;
 
-namespace OpenTelemetry.Exporter.ProfileViewer
+namespace OpenTelemetry.Exporter.ProfileViewer;
+
+public class ProfileViewProcessorBuilder
 {
-	public class ProfileViewProcessorBuilder
+	private readonly List<IProfileFilter> m_ProfileFilters = new();
+
+	internal IEnumerable<IProfileFilter> ProfileFilters => m_ProfileFilters.ToArray();
+
+	public ProfileViewProcessorBuilder AddFilter(IProfileFilter filter)
 	{
-		private readonly List<IProfileFilter> m_ProfileFilters = new List<IProfileFilter>();
+		m_ProfileFilters.Add(filter);
 
-		internal IEnumerable<IProfileFilter> ProfileFilters => m_ProfileFilters.ToArray();
-
-		public ProfileViewProcessorBuilder AddFilter(IProfileFilter filter)
-		{
-			m_ProfileFilters.Add(filter);
-
-			return this;
-		}
+		return this;
 	}
 }

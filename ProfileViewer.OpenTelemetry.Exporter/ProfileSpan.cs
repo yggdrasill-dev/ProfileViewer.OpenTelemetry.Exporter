@@ -1,28 +1,20 @@
-﻿#pragma warning disable CS8618 // 退出建構函式時，不可為 Null 的欄位必須包含非 Null 值。請考慮宣告為可為 Null。
+﻿namespace OpenTelemetry.Exporter.ProfileViewer;
 
-using System;
-using System.Collections.Generic;
-
-namespace OpenTelemetry.Exporter.ProfileViewer
+internal class ProfileSpan
 {
-	internal class ProfileSpan
-	{
-		public IEnumerable<KeyValuePair<string, string?>> Baggage { get; internal set; }
+	public IEnumerable<KeyValuePair<string, string?>> Baggage { get; internal set; } = Array.Empty<KeyValuePair<string, string?>>();
 
-		public string DisplayName { get; internal set; }
+	public string DisplayName { get; internal set; } = default!;
 
-		public TimeSpan Duration { get; internal set; }
+	public TimeSpan Duration { get; internal set; }
 
-		public string Id { get; internal set; }
+	public string Id { get; internal set; } = default!;
 
-		public string? ParentId { get; internal set; }
+	public string? ParentId { get; internal set; }
 
-		public DateTime StartTimeUtc { get; internal set; }
+	public DateTime StartTimeUtc { get; internal set; }
 
-		public string ActivitySourceName { get; internal set; }
+	public string ActivitySourceName { get; internal set; } = default!;
 
-		public IEnumerable<KeyValuePair<string, object?>> Tags { get; internal set; }
-	}
+	public IEnumerable<KeyValuePair<string, object?>> Tags { get; internal set; } = Array.Empty<KeyValuePair<string, object?>>();
 }
-
-#pragma warning restore CS8618 // 退出建構函式時，不可為 Null 的欄位必須包含非 Null 值。請考慮宣告為可為 Null。

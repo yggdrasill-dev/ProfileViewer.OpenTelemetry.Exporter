@@ -118,7 +118,7 @@
 	}
 
 	.css-treeview ul.timing {
-		padding-left: 538px;
+		padding-left: 598px;
 	}
 
 	.css-treeview span.timing {
@@ -140,7 +140,7 @@
 	}
 
 	.css-treeview span.leaf {
-		margin-left: 80px;
+		margin-left: 20px;
 	}
 
 	.css-treeview span.wcfCount, .css-treeview span.rpc_wcfCount, .css-treeview span.wcfDuration, .css-treeview span.rpc_wcfDuration {
