@@ -1,20 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>disable</ImplicitUsings>
+		<LangVersion>10.0</LangVersion>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="OpenTelemetry" Version="1.1.0" />
-    <PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.0.0-rc7" />
-    <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.0.0-rc7" />
-    <PackageReference Include="OpenTelemetry.Instrumentation.Http" Version="1.0.0-rc7" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="OpenTelemetry" Version="1.1.0" />
+		<PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.0.0-rc7" />
+		<PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.0.0-rc7" />
+		<PackageReference Include="OpenTelemetry.Instrumentation.Http" Version="1.0.0-rc7" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\ProfileViewer.OpenTelemetry.Exporter\ProfileViewer.OpenTelemetry.Exporter.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\ProfileViewer.OpenTelemetry.Exporter\ProfileViewer.OpenTelemetry.Exporter.csproj" />
+	</ItemGroup>
 
 
 </Project>
