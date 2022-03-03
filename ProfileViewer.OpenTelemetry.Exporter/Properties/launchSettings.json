@@ -1,23 +1,7 @@
 {
-	"iisSettings": {
-		"windowsAuthentication": false,
-		"anonymousAuthentication": true,
-		"iisExpress": {
-			"applicationUrl": "http://localhost:6283/",
-			"sslPort": 44398
-		}
-	},
 	"profiles": {
-		"IIS Express": {
-			"commandName": "IISExpress",
-			"launchBrowser": true,
-			"environmentVariables": {
-				"ASPNETCORE_ENVIRONMENT": "Development"
-			}
-		},
 		"OpenTelemetry.Contrib.Extensions.ProfileViewer": {
 			"commandName": "Project",
-			"launchBrowser": true,
 			"environmentVariables": {
 				"ASPNETCORE_ENVIRONMENT": "Development"
 			},
