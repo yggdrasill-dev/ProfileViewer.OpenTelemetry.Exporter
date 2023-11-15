@@ -4,5 +4,5 @@ namespace OpenTelemetry.Exporter.ProfileViewer.Filters;
 
 public interface IProfileFilter
 {
-	bool Filtering(Activity activity);
+    bool Filtering(Activity activity);
 }

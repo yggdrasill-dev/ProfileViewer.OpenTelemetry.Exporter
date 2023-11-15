@@ -1,3 +1,4 @@
+﻿//using OpenTelemetry.Exporter.ProfileViewer.Filters;
 using OpenTelemetry.Exporter.ProfileViewer.Filters;
 using OpenTelemetry.Trace;
 
@@ -38,8 +39,9 @@ public class Startup
 	{
 		_ = services.AddControllers();
 
-		_ = services.AddOpenTelemetryTracing(
-			(builder) => builder
+		_ = services
+			.AddOpenTelemetry()
+			.WithTracing((builder) => builder
 				.AddSource("DemoWebApi.*")
 				.AddAspNetCoreInstrumentation()
 				.AddHttpClientInstrumentation()
