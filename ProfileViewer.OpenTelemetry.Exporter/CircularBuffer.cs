@@ -1,6 +1,8 @@
-﻿using System;
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
+#if NETSTANDARD2_0 || NETCOREAPP3_1
+using System;
 using System.Collections.Generic;
+#endif
 
 namespace OpenTelemetry.Exporter.ProfileViewer;
 

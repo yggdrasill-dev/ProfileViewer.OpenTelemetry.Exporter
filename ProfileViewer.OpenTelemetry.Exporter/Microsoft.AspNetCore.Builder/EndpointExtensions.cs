@@ -1,11 +1,13 @@
 ﻿#if NETCOREAPP3_1_OR_GREATER
 
+#if NETCOREAPP3_1
 using Microsoft.AspNetCore.Routing;
+#endif
 using OpenTelemetry.Exporter.ProfileViewer;
 
 namespace Microsoft.AspNetCore.Builder;
 
-public static class EndpointRouteBuilderExtensions
+public static class EndpointRouteExtensions
 {
     public static void MapProfileViewer(this IEndpointRouteBuilder endpoints)
     {
